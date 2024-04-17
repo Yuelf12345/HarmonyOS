@@ -1,13 +1,16 @@
 
 import MyComponent from './MyPage'
+import Message from './MessagePage'
+import { request } from '../utils/request'
+import PreferencesUtil from '../store/index'
+import router from '@ohos.router';
 
-import http from '@ohos.net.http';
-
-
+import common from '@ohos.app.ability.common';
 
 @Entry
 @Component
 struct TabsExample {
+  context:common.UIAbilityContext = getContext(this) as common.UIAbilityContext
   @State fontColor: string = '#182431'
   @State selectedFontColor: string = '#007DFF'
   @State currentIndex: number = 0
@@ -25,52 +28,27 @@ struct TabsExample {
     .justifyContent(FlexAlign.Center)
   }
 
-   @State userInfo:String = 'hhh';
+    @State userInfo:any = {
+      username:''
+    };
     @State count: number = 0;
-  S_login() {
-    let httpRequest = http.createHttp();
-    let url = "http://10.0.1.83:3000/login"     // 要使用ip地址
-    console.info("开始请求");
-    httpRequest.request(
-      // 填写HTTP请求的URL地址，可以带参数也可以不带参数。URL地址需要开发者自定义。请求的参数可以在extraData中指定
-      url,
-      {
-        method: http.RequestMethod.POST, // 可选，默认为http.RequestMethod.GET
-        // 开发者根据自身业务需要添加header字段
-        header: {
-          'Content-Type': 'application/json'
-        },
-        // 当使用POST请求时此字段用于传递内容
-        extraData: {
-          "username": '张三',
-          "password": '123456'
-        },
-        connectTimeout: 6000, // 可选，默认为60000ms
-        readTimeout: 6000, // 可选，默认为60000ms
-      }, (err, data:any) => {
+    @State result:any = null;
 
-      if (!err) {
-        // data.result为HTTP响应内容，可根据业务需要进行解析
-        if (data.responseCode == 200) {
-          console.info("传递成功")
-          console.info("从服务器返回接口返回数据成功，传递参数" + data.result)
-        }
-        console.info('Result:' + data.result);
-        console.info('code:' + data.responseCode);
-        // data.header为HTTP响应头，可根据业务需要进行解析
-        console.info('header:' + JSON.stringify(data.header));
-        console.info('cookies:' + data.cookies); // 8+
-        if(data.result.code  == 200){
-          this.userInfo =data.result.data
-        }
-        console.info('this.userInfo',this.userInfo)
-      } else {
-        console.info('error:' + JSON.stringify(err));
-        // 当该请求使用完毕时，调用destroy方法主动销毁。
-        httpRequest.destroy();
-      }
+  async aboutToAppear(){
+    console.info("===页面初始化===")
+    await PreferencesUtil.loadPreference(this.context,"USER")
+    const res = await PreferencesUtil.getPreferenceValue("USER","userinfo","") as string
+    console.info('res',res)
+    if(res){
+      this.userInfo = JSON.parse(res)
+      console.info("userInfo",this.userInfo)
+    }else{
+      console.info("userInfo",this.userInfo)
+      router.pushUrl({
+        // 本人创建过的页面
+        url: 'pages/LoginPage',
+      })
     }
-    );
   }
 
 
@@ -79,22 +57,18 @@ struct TabsExample {
       Tabs({ barPosition: BarPosition.End, controller: this.controller }) {
         TabContent() {
           Column(){
-            Button(`请求次数: ${this.count} ${this.userInfo}`)
-              .onClick(()=>{
-                // this.S_login()
-                console.info('打印日志信息');
+            Button(`请求次数: ${this.count}`)
+              .onClick(async()=>{
                 this.count += 1;
-                // console.info("普通的信息");
-                // console.debug("DEBUG级别的信息");
-                // console.warn("警告的信息");
-                this.userInfo = 'hello'
               })
-            Text(`${this.userInfo}`)
+            Text(`${this.userInfo.username}`)
           }.width('100%').height('100%').backgroundColor('#00CB87')
         }.tabBar(this.TabBuilder('首页', 0, $r('app.media.home_selected'), $r('app.media.home_normal')))
 
         TabContent() {
-          Column().width('100%').height('100%').backgroundColor('#007DFF')
+          Column() {
+            Message()
+          }.width('100%').height('100%').backgroundColor('#007DFF')
         }.tabBar(this.TabBuilder('信息', 1, $r('app.media.message_selected'), $r('app.media.message_normal')))
 
         TabContent() {

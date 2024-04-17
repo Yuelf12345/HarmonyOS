@@ -1,15 +1,36 @@
+import prompt from '@system.prompt';
 // 引入router
 import router from '@ohos.router';
-// 引入弹窗
-import prompt from '@system.prompt';
-
+import { request } from '../utils/request'
+import PreferencesUtil from '../store/index'
 let msg: String = 'login页面传来的数据'
 
 @Entry
 @Component
 struct RowPage {
-  @State account: string = ''
-  @State password: any = ''
+  @State username: string = '张三'
+  @State password: any = '123'
+
+  @State userInfo:string = '用户信息';
+  @State count: number = 0;
+  @State result:any = null;
+
+  async S_login(params) {
+    this.result =await request('/login','POST',params)
+    console.info('this.result',JSON.stringify(this.result))
+    console.info('code',this.result.code == 200)
+    this.userInfo = this.result.data
+    if(this.result.code == 200){
+      // 保存用户信息
+      await  PreferencesUtil.putPreferenceValue("USER","userinfo",JSON.stringify(this.userInfo))
+      router.replaceUrl({
+        url: 'pages/Index',
+      })
+    }else{
+      // 清除用户信息
+      await  PreferencesUtil.deletePreferenceValue("USER","userinfo")
+    }}
+
 
   build() {
     Column({ space: 10 }) {
@@ -25,15 +46,14 @@ struct RowPage {
         .fontSize(16)
         .fontColor('#798189')
         .margin({ top: 20, bottom: 20 })
-      TextInput({ placeholder: '账号' })
-        .maxLength(11)
-        .type(InputType.Number)
+      TextInput({ placeholder: '账号' ,text:`${this.username}`})
         .onChange((value: string) => {
-          this.account = value;
+          this.username = value;
         })
         .backgroundColor('#F0F2F4')
         .border({ color: '#ff008aff', width: '100%' })
-      TextInput({ placeholder: '密码' })
+      TextInput({ placeholder: '密码',text:`${this.password}` })
+        .maxLength(12)
         .type(InputType.Password)
         .onChange((value: string) => {
           this.password = value;
@@ -51,13 +71,10 @@ struct RowPage {
 
       Button('登录')
         .onClick(() => {
-          if (this.account != '' && this.password != '') {
-            router.pushUrl({
-              // 本人创建过的页面
-              url: 'pages/ListPage',
-              params: {
-                src: msg,
-              }
+          if (this.username != '' && this.password != '') {
+            this.S_login({
+              username:this.username,
+              password:this.password
             })
           } else {
             prompt.showToast({
