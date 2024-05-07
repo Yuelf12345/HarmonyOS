@@ -11,7 +11,7 @@ export default struct Message {
       MenuItem({ startIcon: $r("app.media.data_selected"), content: "编辑" }).onClick(()=>{
         this.isEdit = true
         this.currentIndex = index
-        console.info('111', index)
+        console.info('index',this.currentIndex)
         this.title = this.taskData[index].title
         this.addTaskDialogController.open()
       })
@@ -51,6 +51,7 @@ export default struct Message {
       taskData: $taskData,
       isEdit: $isEdit,
       totalTask: $totalTask,
+      currentIndex:$currentIndex,
       cancel: this.onCancel,
       confirm: this.onAccept,
     })
@@ -61,13 +62,17 @@ export default struct Message {
   }
   onAccept(title) {
     if(this.isEdit){
-      this.taskData.splice(this.currentIndex-1,1,new Task(title))
+      console.info('index', this.currentIndex)
+      this.taskData.splice(this.currentIndex,1,new Task(title))
     }else{
       this.taskData.push(new Task(title));
     }
     this.totalTask = this.taskData.length
     this.title = ''
   }
+
+  public valueArr: number[] = [10, 10, 10, 10, 10, 10, 10, 10, 10]
+
 
   build() {
     Column({space:20}){
@@ -76,19 +81,34 @@ export default struct Message {
           .fontWeight(FontWeight.Bolder)
           .fontSize(30)
         Stack(){
-          Progress({value:this.finishTask,type:ProgressType.Ring,total:this.totalTask})
-            .width('100')
-          Row() {
-            Text(this.finishTask + '')
-              .fontSize(30)
-              .fontColor('#36D')
-            Text(' / ' + this.taskData.length)
-              .fontSize(30)
+          // Progress({value:this.finishTask,type:ProgressType.Ring,total:this.totalTask})
+          //   .width('100')
+          // Row() {
+          //   Text(this.finishTask + '')
+          //     .fontSize(30)
+          //     .fontColor('#36D')
+          //   Text(' / ' + this.taskData.length)
+          //     .fontSize(30)
+          // }
+          DataPanel({ values: [(this.finishTask/this.taskData.length)*100], max: 100, type: DataPanelType.Circle }).width(168).height(168)
+          Column() {
+            if(this.taskData.length > 0){
+              Text(`${(this.finishTask/this.taskData.length)*100}`).fontSize(35).fontColor('#182431')
+            }else{
+              Text('0').fontSize(35).fontColor('#182431')
+            }
           }
+
+          Text('%')
+            .fontSize(9.33)
+            .lineHeight(12.83)
+            .fontWeight(500)
+            .opacity(0.6)
+            .position({ x: 104.42, y: 78.17 })
         }
       }.card().margin({top:20,bottom:10})
       .justifyContent(FlexAlign.SpaceEvenly)
-      Button("新增任务")
+      Button('新增任务')
         .width(200)
         .onClick(()=>{
           this.isEdit = false

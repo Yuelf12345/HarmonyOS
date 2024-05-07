@@ -8,6 +8,7 @@ export struct AddTaskDialog{
   @Link isEdit:boolean
   @Link taskData:string
   @Link totalTask:number
+  @Link currentIndex:number
   build() {
     Column({ space: 10 }) {
       Text("添加任务").fontSize(20).margin({top:10,bottom:10})
@@ -18,7 +19,7 @@ export struct AddTaskDialog{
             this.controller.close()
             this.cancel()
           }).backgroundColor(0x909399)
-        Button('添加')
+        Button(`${this.isEdit?'保存':'添加'}`)
           .onClick(()=>{
             this.controller.close()
             this.confirm(this.title)
