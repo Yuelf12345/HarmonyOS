@@ -1,31 +1,73 @@
-
+import {AddTaskDialog} from '../components/TaskDialog'
 
 @Entry
 @Component
 export default struct Message {
-
-  @Builder  DeleteTask(index:number){
-  Button(){
-    Image($r("app.media.delete"))
-      .width(24)
+  @State isEdit:boolean = false
+  @State currentIndex:number = 0
+  @Builder
+  MyMenu(index:number){
+    Menu() {
+      MenuItem({ startIcon: $r("app.media.data_selected"), content: "编辑" }).onClick(()=>{
+        this.isEdit = true
+        this.currentIndex = index
+        console.info('111', index)
+        this.title = this.taskData[index].title
+        this.addTaskDialogController.open()
+      })
+      MenuItem({ startIcon: $r("app.media.delete"), content: "删除" }).onClick(()=>{
+          this.taskData.splice(index,1)
+          this.totalTask = this.taskData.length
+          this.finishTask = this.taskData.filter(i=>i.state).length
+      })
+    }
   }
-  .width(40)
-  .height(40)
-  .type(ButtonType.Circle)
-  .backgroundColor(Color.Red).margin(5)
-  .onClick(()=>{
-    this.taskData.splice(index,1)
-    this.totalTask = this.taskData.length
-    this.finishTask = this.taskData.filter(i=>i.finished).length
-  })
-}
+
+  @Builder  TaskMenu(index:number){
+    Button(){
+      Image($r("app.media.icon"))
+        .width(24)
+    }
+    .width(40)
+    .height(40)
+    .type(ButtonType.Circle)
+    .backgroundColor(Color.White).margin(5)
+    .bindMenu(this.MyMenu(index))
+  }
+
   //数据
-  @State taskData:Array<Task> = []
+
   index:number = 0
 
   //状态变量
   @State totalTask:number = 0
   @State finishTask:number = 0
+
+  @State taskData:Array<Task> = []
+  @State title: string = ''
+  addTaskDialogController: CustomDialogController = new CustomDialogController({
+    builder: AddTaskDialog({
+      title: $title,
+      taskData: $taskData,
+      isEdit: $isEdit,
+      totalTask: $totalTask,
+      cancel: this.onCancel,
+      confirm: this.onAccept,
+    })
+  })
+  onCancel() {
+    this.title = ''
+    console.info('cancel')
+  }
+  onAccept(title) {
+    if(this.isEdit){
+      this.taskData.splice(this.currentIndex-1,1,new Task(title))
+    }else{
+      this.taskData.push(new Task(title));
+    }
+    this.totalTask = this.taskData.length
+    this.title = ''
+  }
 
   build() {
     Column({space:20}){
@@ -40,7 +82,7 @@ export default struct Message {
             Text(this.finishTask + '')
               .fontSize(30)
               .fontColor('#36D')
-            Text(' / ' + this.totalTask)
+            Text(' / ' + this.taskData.length)
               .fontSize(30)
           }
         }
@@ -49,7 +91,8 @@ export default struct Message {
       Button("新增任务")
         .width(200)
         .onClick(()=>{
-          this.taskData.push(new Task())
+          this.isEdit = false
+          this.addTaskDialogController.open()
         })
       List({space:8}){
         ForEach(
@@ -57,17 +100,17 @@ export default struct Message {
           (item:Task,index)=>{
             ListItem(){
               Row(){
-                Text(item.name)
+                Text(item.title)
                   .fontSize(20)
                 Checkbox()
-                  .select(item.finished)
+                  .select(item.state)
                   .onChange(val=>{
-                    item.finished = val
-                    this.finishTask = this.taskData.filter(i=>i.finished).length
+                    item.state = val
+                    this.finishTask = this.taskData.filter(i=>i.state).length
                   })
               }.card()
               .justifyContent(FlexAlign.SpaceBetween)
-            }.swipeAction({end:this.DeleteTask(index)})
+            }.swipeAction({end:this.TaskMenu(index)})
           }
         )
       }
@@ -85,8 +128,19 @@ export default struct Message {
 
 class Task{
   static id: number = 1
-  name: string = `任务${Task.id++}`
-  finished: boolean = false
+  title: string
+  content: string
+  state: boolean = false
+
+  constructor(title:string,content?:string,state?:boolean) {
+    this.title = title
+    if(content) {
+      this.content = content
+    }
+    if (state) {
+      this.state = state
+    }
+  }
 }
 
 @Styles
