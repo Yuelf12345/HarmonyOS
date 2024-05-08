@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/LoginPage",
-    "pages/MessagePage"
+    "pages/MessagePage",
+    "pages/BaseCom"
   ]
 }

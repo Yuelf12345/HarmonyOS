@@ -81,19 +81,10 @@ export default struct Message {
           .fontWeight(FontWeight.Bolder)
           .fontSize(30)
         Stack(){
-          // Progress({value:this.finishTask,type:ProgressType.Ring,total:this.totalTask})
-          //   .width('100')
-          // Row() {
-          //   Text(this.finishTask + '')
-          //     .fontSize(30)
-          //     .fontColor('#36D')
-          //   Text(' / ' + this.taskData.length)
-          //     .fontSize(30)
-          // }
           DataPanel({ values: [(this.finishTask/this.taskData.length)*100], max: 100, type: DataPanelType.Circle }).width(168).height(168)
           Column() {
             if(this.taskData.length > 0){
-              Text(`${(this.finishTask/this.taskData.length)*100}`).fontSize(35).fontColor('#182431')
+              Text(`${((this.finishTask/this.taskData.length)*100).toFixed(1)}`).fontSize(35).fontColor('#182431')
             }else{
               Text('0').fontSize(35).fontColor('#182431')
             }

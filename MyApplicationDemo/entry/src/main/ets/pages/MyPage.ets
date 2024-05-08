@@ -1,5 +1,6 @@
 import router from '@ohos.router';
 import PreferencesUtil from '../store/index'
+
 @Component
 export default struct MyComponent{
   private title = "第二期"
