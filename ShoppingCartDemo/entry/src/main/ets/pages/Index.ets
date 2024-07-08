@@ -1,16 +1,33 @@
+import router from '@ohos.router';
+import Shopping from './Shopping'
+
 @Entry
 @Component
-struct Index {
-  @State message: string = 'Hello World'
+struct ContentView {
 
   build() {
     Row() {
-      Column() {
-        Text(this.message)
-          .fontSize(50)
-          .fontWeight(FontWeight.Bold)
+      Tabs({ barPosition: BarPosition.End }) {
+        TabContent() {
+          Text('首页的内容').fontSize(30)
+        }
+        .tabBar('首页')
+
+        TabContent() {
+          Shopping()
+        }
+        .tabBar('商城')
+
+        TabContent() {
+          Text('发现的内容').fontSize(30)
+        }
+        .tabBar('发现')
+
+        TabContent() {
+          Text('我的内容').fontSize(30)
+        }
+        .tabBar("我的")
       }
-      .width('100%')
     }
     .height('100%')
   }

@@ -1,5 +1,10 @@
 {
   "src": [
-    "pages/Index"
+    "pages/Index",
+    "pages/ShoppingCart",
+    "pages/rdbStorePage",
+    "pages/storePage",
+    "pages/Shopping",
+    "pages/Test"
   ]
 }
