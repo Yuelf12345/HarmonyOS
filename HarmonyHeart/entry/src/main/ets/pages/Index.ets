@@ -19,8 +19,7 @@ struct Index {
         Text('点击获取数据')
           .fontSize(20)
           .onClick(async() => {
-            const data:object = await apiGetData();
-            console.log('data===>',JSON.stringify(data))
+            await apiGetData();
           })
       }
     }
