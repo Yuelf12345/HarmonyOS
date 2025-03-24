@@ -1,3 +1,5 @@
+import {apiGetData} from '../api/index';
+
 @Entry
 @Component
 struct Index {
@@ -13,6 +15,14 @@ struct Index {
           center: { anchor: '__container__', align: VerticalAlign.Center },
           middle: { anchor: '__container__', align: HorizontalAlign.Center }
         })
+      Button() {
+        Text('点击获取数据')
+          .fontSize(20)
+          .onClick(async() => {
+            const data:object = await apiGetData();
+            console.log('data===>',JSON.stringify(data))
+          })
+      }
     }
     .height('100%')
     .width('100%')

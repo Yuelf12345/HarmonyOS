@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct Index {
+struct Home {
   @State message: string = '首页';
 
   build() {

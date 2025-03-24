@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct Index {
+struct My {
   @State message: string = '我的';
 
   build() {
