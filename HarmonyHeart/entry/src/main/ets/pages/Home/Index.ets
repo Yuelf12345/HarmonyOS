@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct Home {
+struct HomePage {
   @State message: string = '首页';
 
   build() {

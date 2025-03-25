@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct My {
+struct MyPage {
   @State message: string = '我的';
 
   build() {
