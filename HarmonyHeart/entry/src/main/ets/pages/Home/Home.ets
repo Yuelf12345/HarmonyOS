@@ -1,6 +1,6 @@
 @Entry
 @Component
-struct HomePage {
+export default struct Home {
   @State message: string = '首页';
 
   build() {

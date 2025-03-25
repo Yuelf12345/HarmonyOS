@@ -1,29 +1,35 @@
-import {apiGetData} from '../api/index';
+import Home from './Home/Home'
+import My from './My/My'
+
 
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World';
+  @State currentIndex: number = 0
+
+  @Builder tabBuilder(title: string, targetIndex: number) {
+    Column() {
+      Text(title)
+        .fontColor(this.currentIndex === targetIndex ? '#1698CE' : '#6B6B6B')
+    }
+  }
 
   build() {
-    RelativeContainer() {
-      Text(this.message)
-        .id('HelloWorld')
-        .fontSize(50)
-        .fontWeight(FontWeight.Bold)
-        .alignRules({
-          center: { anchor: '__container__', align: VerticalAlign.Center },
-          middle: { anchor: '__container__', align: HorizontalAlign.Center }
-        })
-      Button() {
-        Text('点击获取数据')
-          .fontSize(20)
-          .onClick(async() => {
-            await apiGetData();
-          })
+    Column() {
+      Tabs({ barPosition: BarPosition.End }) {
+        TabContent() {
+          Home()
+        }.tabBar(this.tabBuilder('首页', 0))
+
+        TabContent() {
+          My()
+        }.tabBar(this.tabBuilder('我的', 1))
       }
-    }
-    .height('100%')
-    .width('100%')
+      .animationDuration(0)
+      .backgroundColor('#F1F3F5')
+      .onChange((index: number) => {
+        this.currentIndex = index
+      })
+    }.width('100%')
   }
 }
