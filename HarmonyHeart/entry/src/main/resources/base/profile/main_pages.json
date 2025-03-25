@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/Home/Home",
-    "pages/My/My"
+    "pages/My/My",
+    "pages/LottiePage"
   ]
 }
