@@ -43,7 +43,16 @@
     requestPermissions: [
       {
         name: "ohos.permission.INTERNET",
+        "reason": "$string:reason_internet"
       },
+      {
+        name: "ohos.permission.CAMERA",
+        "reason": "$string:reason_camera",
+        usedScene: {
+          "abilities": [],
+          "when" : "always" // always: 总是; inuse: 使用时;
+        },
+      }
     ],
   },
 }
