@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/Home/Home",
     "pages/My/My",
-    "pages/LottiePage"
+    "pages/LottiePage",
+    "pages/Base/CustomCom"
   ]
 }
