@@ -1,58 +1,67 @@
 {
-  module: {
-    name: "entry",
-    type: "entry",
-    description: "$string:module_desc",
-    mainElement: "EntryAbility",
-    deviceTypes: ["phone", "tablet", "2in1"],
-    deliveryWithInstall: true,
-    installationFree: false,
-    pages: "$profile:main_pages",
-    abilities: [
-      {
-        name: "EntryAbility",
-        srcEntry: "./ets/entryability/EntryAbility.ets",
-        description: "$string:EntryAbility_desc",
-        icon: "$media:layered_image",
-        label: "$string:EntryAbility_label",
-        startWindowIcon: "$media:startIcon",
-        startWindowBackground: "$color:start_window_background",
-        exported: true,
-        skills: [
-          {
-            entities: ["entity.system.home"],
-            actions: ["action.system.home"],
-          },
+    "module": {
+        "name": "entry",
+        "type": "entry",
+        "description": "$string:module_desc",
+        "mainElement": "EntryAbility",
+        "deviceTypes": [
+            "phone",
+            "tablet",
+            "2in1"
         ],
-      },
-    ],
-    extensionAbilities: [
-      {
-        name: "EntryBackupAbility",
-        srcEntry: "./ets/entrybackupability/EntryBackupAbility.ets",
-        type: "backup",
-        exported: false,
-        metadata: [
-          {
-            name: "ohos.extension.backup",
-            resource: "$profile:backup_config",
-          },
+        "deliveryWithInstall": true,
+        "installationFree": false,
+        "pages": "$profile:main_pages",
+        "abilities": [
+            {
+                "name": "EntryAbility",
+                "srcEntry": "./ets/entryability/EntryAbility.ets",
+                "description": "$string:EntryAbility_desc",
+                "icon": "$media:layered_image",
+                "label": "$string:EntryAbility_label",
+                "startWindowIcon": "$media:startIcon",
+                "startWindowBackground": "$color:start_window_background",
+                "exported": true,
+                "skills": [
+                    {
+                        "entities": [
+                            "entity.system.home"
+                        ],
+                        "actions": [
+                            "action.system.home"
+                        ]
+                    }
+                ],
+                "launchType": "singleton", // singleton:单列模式; multiton/standard:多列模式; specified:启动模式;
+            }
         ],
-      },
-    ],
-    requestPermissions: [
-      {
-        name: "ohos.permission.INTERNET",
-        "reason": "$string:reason_internet"
-      },
-      {
-        name: "ohos.permission.CAMERA",
-        "reason": "$string:reason_camera",
-        usedScene: {
-          "abilities": [],
-          "when" : "always" // always: 总是; inuse: 使用时;
-        },
-      }
-    ],
-  },
+        "extensionAbilities": [
+            {
+                "name": "EntryBackupAbility",
+                "srcEntry": "./ets/entrybackupability/EntryBackupAbility.ets",
+                "type": "backup",
+                "exported": false,
+                "metadata": [
+                    {
+                        "name": "ohos.extension.backup",
+                        "resource": "$profile:backup_config"
+                    }
+                ]
+            }
+        ],
+        "requestPermissions": [
+            {
+                "name": "ohos.permission.INTERNET",
+                "reason": "$string:reason_internet"
+            },
+            {
+                "name": "ohos.permission.CAMERA",
+                "reason": "$string:reason_camera",
+                "usedScene": {
+                    "abilities": [],
+                    "when": "always" // always: 总是; inuse: 使用时;
+                }
+            }
+        ]
+    }
 }
