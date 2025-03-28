@@ -1,3 +1,4 @@
+import NavBack from '../../components/NavBack'
 @Entry
 @Component
 struct CustomCom {
@@ -5,6 +6,7 @@ struct CustomCom {
 
   build() {
     RelativeContainer() {
+      NavBack()
       Text(this.message)
         .id('CustomComHelloWorld')
         .fontSize(50)
