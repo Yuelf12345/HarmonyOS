@@ -3,12 +3,13 @@ import logger from "../../utils/print";
 interface Page {
   name: string;
   path: string;
+  selected: boolean
 }
 @Entry
 @Component
 export default struct Home {
   @State message: string = '首页';
-  private pages: Page[] = [{ name: 'CustomCom', path: 'pages/Base/CustomCom'}]
+  private pages: Page[] = [{ name: 'CustomCom', path: 'pages/Base/CustomCom', selected: false}]
 
   handleClick(url:string) {
     try {
@@ -34,11 +35,20 @@ export default struct Home {
         List({ space: 20, initialIndex: 0 }) {
           ForEach(this.pages, (item: Page) => {
             ListItem() {
-              Text(item.name)
-                .ItemStyle()
-                .onClick(() => {
-                  this.handleClick(item.path)
-                })
+              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center}){
+                Checkbox()
+                  .select(item.selected)
+                  .selectedColor(0xed6f21)
+                  .shape(CheckBoxShape.CIRCLE)
+                  .onChange((value: boolean) => {
+                    console.info('Checkbox1 change is' + value)
+                  })
+                Text(item.name)
+                  .ItemStyle()
+                  .onClick(() => {
+                    this.handleClick(item.path)
+                  })
+              }
             }
           }, (item: string) => item)
         }
