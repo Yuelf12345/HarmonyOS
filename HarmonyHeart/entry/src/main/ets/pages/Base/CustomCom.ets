@@ -3,8 +3,16 @@ import logger from "../../utils/print";
 @Entry
 @Component
 struct CustomCom {
-  @State message: string = 'CustomCom';
+  @Builder
+  defaultChild() {
+    Text('默认组件')
+  };
+
+  @Prop  message: string = 'CustomCom'; // 参数
+  @BuilderParam child: () => void = this.defaultChild // 组件
+  clickEvent?: () => void; // 点击事件
   @State textColor: Color = Color.Black;
+
 
   onPageShow() {
     this.textColor = Color.Blue;
