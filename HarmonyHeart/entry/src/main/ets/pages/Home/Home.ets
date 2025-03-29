@@ -35,7 +35,7 @@ export default struct Home {
         List({ space: 20, initialIndex: 0 }) {
           ForEach(this.pages, (item: Page) => {
             ListItem() {
-              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center}){
+              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,justifyContent: FlexAlign.Center}){
                 Checkbox()
                   .select(item.selected)
                   .selectedColor(0xed6f21)
@@ -43,12 +43,12 @@ export default struct Home {
                   .onChange((value: boolean) => {
                     console.info('Checkbox1 change is' + value)
                   })
+                  .margin({ right: 20})
                 Text(item.name)
-                  .ItemStyle()
                   .onClick(() => {
                     this.handleClick(item.path)
                   })
-              }
+              }.ContentStyle()
             }
           }, (item: string) => item)
         }
@@ -65,11 +65,9 @@ export default struct Home {
   }
 }
 
-@Extend(Text) function ItemStyle(){
+@Extend(Flex) function ContentStyle(){
   .width('100%')
   .height(100)
-  .fontSize(16)
-  .textAlign(TextAlign.Center)
   .borderRadius(10)
   .backgroundColor(0xFFFFFF)
 }
