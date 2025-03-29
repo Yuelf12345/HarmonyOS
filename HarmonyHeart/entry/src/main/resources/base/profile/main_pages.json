@@ -4,6 +4,8 @@
     "pages/Home/Home",
     "pages/My/My",
     "pages/LottiePage",
-    "pages/Base/CustomCom"
+    "pages/Base/CustomCom",
+    "pages/Base/NavigationCom",
+    "pages/Base/PageOne"
   ]
 }

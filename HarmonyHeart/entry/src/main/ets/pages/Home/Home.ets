@@ -9,7 +9,10 @@ interface Page {
 @Component
 export default struct Home {
   @State message: string = '首页';
-  private pages: Page[] = [{ name: 'CustomCom', path: 'pages/Base/CustomCom', selected: false}]
+  private pages: Page[] = [
+    { name: 'CustomCom', path: 'pages/Base/CustomCom', selected: false},
+    { name: 'NavigationCom', path: 'pages/Base/NavigationCom', selected: false}
+  ]
 
   handleClick(url:string) {
     try {
@@ -50,7 +53,7 @@ export default struct Home {
                   })
               }.ContentStyle()
             }
-          }, (item: string) => item)
+          }, (item: Page) => item.name)
         }
         .listDirection(Axis.Vertical) // 排列方向
         .scrollBar(BarState.Off)
@@ -58,6 +61,7 @@ export default struct Home {
         .divider({ strokeWidth: 2, color: 0xFFFFFF, startMargin: 20, endMargin: 20 }) // 每行之间的分界线
         .edgeEffect(EdgeEffect.Spring) // 边缘效果设置为Spring
         .width('100%')
+        .height('500')
     }
     .height('100%')
     .width('100%')

@@ -11,7 +11,8 @@
         ],
         "deliveryWithInstall": true,
         "installationFree": false,
-        "pages": "$profile:main_pages",
+        "pages": "$profile:main_pages", // 模块页面表
+        "routerMap": "$profile:route_map", // 模块路由表
         "abilities": [
             {
                 "name": "EntryAbility",

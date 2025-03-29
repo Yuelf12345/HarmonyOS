@@ -15,7 +15,7 @@ export default struct NavBack {
           router.back();
         })
     }
-    .height('100%')
+    .height('auto')
     .width('100%')
   }
 }

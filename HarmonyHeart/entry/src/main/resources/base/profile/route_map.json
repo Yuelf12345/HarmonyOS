@@ -1,0 +1,13 @@
+{
+  "routerMap":[
+    {
+      "name":"PageOne",
+      "pageSourceFile": "src/main/ets/pages/Base/PageOne.ets",
+      "buildFunction": "PageOneBuilder",
+      "data": {
+        "description" : "this is PageOne"
+      }
+
+    }
+  ]
+}
