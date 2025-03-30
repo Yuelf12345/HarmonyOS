@@ -19,6 +19,10 @@
     {
       "name": "reason_camera",
       "value": "申请相机权限"
+    },
+    {
+      "name": "network_info",
+      "value": "申请网络信息权限"
     }
   ]
 }

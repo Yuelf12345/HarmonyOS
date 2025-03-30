@@ -6,6 +6,7 @@
     "pages/LottiePage",
     "pages/Base/CustomCom",
     "pages/Base/NavigationCom",
+    "pages/Base/NetworkKitCom",
     "pages/Base/PageOne"
   ]
 }
