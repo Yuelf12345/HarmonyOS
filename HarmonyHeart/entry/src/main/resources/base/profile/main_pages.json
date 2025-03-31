@@ -7,6 +7,7 @@
     "pages/Base/CustomCom",
     "pages/Base/NavigationCom",
     "pages/Base/NetworkKitCom",
-    "pages/Base/PageOne"
+    "pages/Base/PageOne",
+    "pages/Base/PreferencesCom"
   ]
 }

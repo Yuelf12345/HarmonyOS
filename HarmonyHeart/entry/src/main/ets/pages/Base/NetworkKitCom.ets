@@ -1,3 +1,4 @@
+import NavBack from '../../components/NavBack'
 import ConnectionUtils from '../../utils/connectionUtils'
 @Entry
 @Component
@@ -13,6 +14,7 @@ struct NetworkKitCom {
   build() {
     RelativeContainer() {
       Column(){
+        NavBack()
         Text(this.message)
           .id('NetworkKitCom')
           .fontSize(20)
