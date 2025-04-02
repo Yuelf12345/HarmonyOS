@@ -1,4 +1,5 @@
 import { preferences } from '@kit.ArkData'
+import { LengthMetrics } from '@kit.ArkUI'
 import { BusinessError } from '@kit.BasicServicesKit'
 import logger from '../../utils/print'
 
@@ -14,7 +15,7 @@ struct PreferencesCom {
   }
 
   build() {
-    Flex({justifyContent: FlexAlign.Center,direction: FlexDirection.Column,alignItems: FlexAlign.Center}) {
+    Flex({justifyContent: FlexAlign.Center,direction: FlexDirection.Column,alignItems: ItemAlign.Center, space:{main: LengthMetrics.px(20)}}) {
       Text(this.message)
         .id('PreferencesCom')
         .fontSize(20)

@@ -1,4 +1,4 @@
-import { router } from '@kit.ArkUI';
+import { router, LengthMetrics } from '@kit.ArkUI';
 import logger from "../../utils/print";
 interface Page {
   name: string;
@@ -40,7 +40,7 @@ export default struct Home {
         List({ space: 20, initialIndex: 0 }) {
           ForEach(this.pages, (item: Page) => {
             ListItem() {
-              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,justifyContent: FlexAlign.Center}){
+              Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center,justifyContent: FlexAlign.Center, space: { main: LengthMetrics.px(20)}}){
                 Checkbox()
                   .select(item.selected)
                   .selectedColor(0xed6f21)
@@ -48,7 +48,6 @@ export default struct Home {
                   .onChange((value: boolean) => {
                     console.info('Checkbox1 change is' + value)
                   })
-                  .margin({ right: 20})
                 Text(item.name)
                   .onClick(() => {
                     this.handleClick(item.path)
