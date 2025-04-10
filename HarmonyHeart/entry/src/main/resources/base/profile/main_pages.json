@@ -8,6 +8,7 @@
     "pages/Base/NavigationCom",
     "pages/Base/NetworkKitCom",
     "pages/Base/PageOne",
+    "pages/Base/Language",
     "pages/Base/PreferencesCom",
     "pages/Login"
   ]

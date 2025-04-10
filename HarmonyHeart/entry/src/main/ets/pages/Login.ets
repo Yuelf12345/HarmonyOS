@@ -81,15 +81,7 @@ struct LoginPage {
 
         // 其他登录方式
         Row({ space: 20 }) {
-          Image($r('app.media.ic_wechat'))
-            .width(40)
-            .height(40)
-          Image($r('app.media.ic_qq'))
-            .width(40)
-            .height(40)
-          Image($r('app.media.ic_weibo'))
-            .width(40)
-            .height(40)
+
         }
         .margin({ top: 50 })
 
@@ -111,11 +103,7 @@ struct LoginPage {
 
   private handleLogin() {
     if (!this.username || !this.password) {
-      prompt.showToast({
-        message: '请输入用户名和密码',
-        duration: 2000
-      })
-      return
+
     }
 
     this.isLoading = true

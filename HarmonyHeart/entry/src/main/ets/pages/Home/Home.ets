@@ -13,7 +13,8 @@ export default struct Home {
     { name: 'CustomCom', path: 'pages/Base/CustomCom', selected: false},
     { name: 'NavigationCom', path: 'pages/Base/NavigationCom', selected: false},
     { name: 'NetworkKitCom', path: 'pages/Base/NetworkKitCom', selected: false},
-    { name: 'PreferencesCom', path: 'pages/Base/PreferencesCom', selected: false}
+    { name: 'PreferencesCom', path: 'pages/Base/PreferencesCom', selected: false},
+    { name: 'Language', path: 'pages/Base/Language', selected: false}
   ]
 
   handleClick(url:string) {
