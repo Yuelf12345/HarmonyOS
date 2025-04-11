@@ -1,11 +1,15 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-
+import { BusinessError } from '@kit.BasicServicesKit';
+import { WindowController } from '../utils/WindowManager';
 const TAG: string = '[EntryAbility]';
 const DOMAIN_NUMBER: number = 0x0000;
 
 export default class EntryAbility extends UIAbility {
+
+  private windowManager = WindowController.getInstance();
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(DOMAIN_NUMBER, TAG, '%{public}s', 'Ability onCreate UIAbility实例创建完成');
   }
@@ -14,10 +18,16 @@ export default class EntryAbility extends UIAbility {
     hilog.info(DOMAIN_NUMBER, TAG, '%{public}s', 'Ability onDestroy UIAbility实例销毁');
   }
 
-  onWindowStageCreate(windowStage: window.WindowStage): void {
+  async onWindowStageCreate(windowStage: window.WindowStage) {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN_NUMBER, TAG, '%{public}s', 'Ability onWindowStageCreate 窗口平台创建完成');
 
+    // 初始化WindowManager
+    await this.windowManager.init(this.context);
+    await this.windowManager.setFullScreen(true);
+    await this.windowManager.calculateSafeArea();
+
+    // 加载页面
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
         hilog.error(DOMAIN_NUMBER, TAG, 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
@@ -55,6 +65,9 @@ export default class EntryAbility extends UIAbility {
     }catch(e){
       hilog.error(DOMAIN_NUMBER, TAG, 'Failed to load the content. Cause: %{public}s', JSON.stringify(e) ?? '');
     }
+
+
+
   }
 
   onWindowStageDestroy(): void {
