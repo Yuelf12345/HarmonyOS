@@ -14,7 +14,8 @@ export default struct Home {
     { name: 'NavigationCom', path: 'pages/Base/NavigationCom', selected: false},
     { name: 'NetworkKitCom', path: 'pages/Base/NetworkKitCom', selected: false},
     { name: 'PreferencesCom', path: 'pages/Base/PreferencesCom', selected: false},
-    { name: 'Language', path: 'pages/Base/Language', selected: false}
+    { name: 'Language', path: 'pages/Base/Language', selected: false},
+    { name: 'Login', path: 'pages/Login', selected: false}
   ]
 
   handleClick(url:string) {

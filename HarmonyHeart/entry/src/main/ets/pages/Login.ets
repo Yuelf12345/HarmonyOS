@@ -1,41 +1,39 @@
+import { window } from '@kit.ArkUI'
 @Entry
 @Component
-struct LoginPage {
+struct LoginPage  {
   @State username: string = ''
   @State password: string = ''
   @State isLoading: boolean = false
+  @State windowClass: window.Window | null = null //窗口管理器
+  aboutToAppear() {
+    this.init()
+  }
+  //初始化
+  init() {
+    window.getLastWindow(getContext(this), (err, windowClass) => {
+      if (!err.code) {
+        windowClass.setWindowLayoutFullScreen(true)
+      }
+    })
+  }
 
   build() {
     Column() {
-      // 顶部返回按钮
-      Row() {
-        Image($r('app.media.ic_back'))
-          .width(24)
-          .height(24)
-          .margin({ left: 16 })
-          .onClick(() => {
-            // 返回上一页
-          })
-      }
-      .width('100%')
-      .height(56)
-      .alignItems(VerticalAlign.Center)
-      .justifyContent(FlexAlign.Start)
-
       // 可爱的太阳和月亮图标
       Stack() {
         Image($r('app.media.ic_sun'))
           .width(80)
           .height(80)
           .margin({ top: 20, right: 100 })
-        
+
         Image($r('app.media.ic_moon'))
           .width(80)
           .height(80)
           .margin({ top: 20, left: 100 })
       }
       .width('100%')
-      .height(200)
+      .height(300)
       .backgroundColor('#6B5ECD')
       .borderRadius({ bottomLeft: 30, bottomRight: 30 })
 
@@ -113,4 +111,4 @@ struct LoginPage {
       // 登录成功后的处理
     }, 2000)
   }
-} 
+}
